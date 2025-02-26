@@ -1,7 +1,17 @@
-﻿
+﻿@page "/admin"
+@rendermode InteractiveServer
+
 
 <h3>Admin</h3>
 
+<EditForm Model="_skill">
+    <InputText id="username" placeholder="Username" />
+    <InputText id="password" placeholder="Password" />
+    <button type="submit">Login</button>
+
+</EditForm>
+
 @code {
+    private Skills _skill = new();
 
 }

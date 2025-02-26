@@ -1,5 +1,4 @@
 ﻿using Labb3FullstackBlazor.Models;
-using System.Net.Http.Json;
 
 public class AdminService
 {

@@ -12,7 +12,7 @@ body {
     line-height: 1.6;
     font-size: 16px;
     overflow-x: hidden;
-    background-image: url('/Eklof.png'); /* Add this line */
+    background-image: url(''); /* Add this line */
     background-size: contain; /* Cover the entire viewport */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -30,43 +30,12 @@ a {
         color: #ffb84d;
     }
 
-/* Header */
-header {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100px; /* Adjust height as needed */
-    text-align: center;
-}
-
-    header h1 {
-        font-size: 2rem;
-        color: #b74b25;
-        font-weight: 500;
-    }
-
-    header p {
-        font-size: 1rem;
-        color: #eaeaea;
-        margin-top: 5px;
-    }
-
 /* Main Section */
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     text-align: center;
-}
-
-section {
-    max-width: 1000px;
-    width: 90%;
-    padding: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
@@ -99,71 +68,13 @@ button {
     transition: background-color 0.3s ease;
 }
 
+.btn {
+    color: white
+}
+
     button:hover {
         background-color: #ffb84d;
     }
-
-/* Footer */
-footer {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    font-size: 1rem;
-    color: #eaeaea;
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-    main {
-        flex-direction: column;
-    }
-
-    header h1 {
-        font-size: 1.5rem;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-}
-
-/* Profile Section */
-.profile {
-    display: flex;
-    justify-content: space-between; /* Space between the profile picture and social links */
-    align-items: center;
-    padding: 20px;
-    position: relative;
-}
-
-.profile-pic {
-    max-width: 300px;
-    border-radius: 50%;
-}
-
-.about {
-    flex: 1; /* Take up remaining space */
-}
-
-.social-links {
-    display: flex;
-    flex-direction: column; /* Stack social links vertically */
-}
-
-    .social-links a {
-        margin-bottom: 10px;
-        color: #f4a300;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-        .social-links a:hover {
-            color: #ffb84d;
-        }
 
 .table {
     color: darkorange;
