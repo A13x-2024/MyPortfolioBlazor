@@ -1,0 +1,100 @@
+﻿@using Labb3FullstackBlazor.Models
+@inject AdminService AdminService
+
+@if (Skill != null)
+{
+    <EditForm Model="Skill" OnValidSubmit="SaveSkill">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div>
+            <label for="name">Name:</label>
+            <InputText id="name" @bind-Value="Skill.Name" class="form-control" />
+        </div>
+        <div>
+            <label for="yearsOfExperience">Years of Experience:</label>
+            <InputText id="yearsOfExperience" @bind-Value="Skill.YearsOfExperience" class="form-control" />
+        </div>
+        <div>
+            <label for="skillLevel">Skill Level:</label>
+            <InputText id="skillLevel" @bind-Value="Skill.SkillLevel" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" @onclick="DeleteSkill">Delete</button>
+    </EditForm>
+}
+else if (Project != null)
+{
+    <EditForm Model="Project" OnValidSubmit="SaveProject">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div>
+            <label for="name">Name:</label>
+            <InputText id="name" @bind-Value="Project.Name" class="form-control" />
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <InputText id="description" @bind-Value="Project.Description" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" @onclick="DeleteProject">Delete</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public Skill Skill { get; set; }
+
+    [Parameter]
+    public Project Project { get; set; }
+
+    private async Task SaveSkill()
+    {
+        try
+        {
+            await AdminService.UpdateSkill(Skill);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving skill: {ex.Message}");
+        }
+    }
+
+    private async Task DeleteSkill()
+    {
+        try
+        {
+            await AdminService.DeleteSkill(Skill.Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting skill: {ex.Message}");
+        }
+    }
+
+    private async Task SaveProject()
+    {
+        try
+        {
+            await AdminService.UpdateProject(Project);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving project: {ex.Message}");
+        }
+    }
+
+    private async Task DeleteProject()
+    {
+        try
+        {
+            await AdminService.DeleteProject(Project.Id);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting project: {ex.Message}");
+        }
+    }
+}
+

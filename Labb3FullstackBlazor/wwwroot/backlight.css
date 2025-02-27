@@ -1,0 +1,11 @@
+﻿/* backlight.css */
+.backlight {
+    box-shadow: 0 0 10px rgba(46, 139, 87, 0.3), 0 0 20px rgba(46, 139, 87, 0.2), 0 0 30px rgba(46, 139, 87, 0.1);
+    border: 2px solid rgba(46, 139, 87, 0.3);
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+}
+
+    .backlight:hover {
+        box-shadow: 0 0 15px rgba(46, 139, 87, 0.5), 0 0 25px rgba(46, 139, 87, 0.4), 0 0 35px rgba(46, 139, 87, 0.3);
+        border: 2px solid rgba(46, 139, 87, 0.5);
+    }

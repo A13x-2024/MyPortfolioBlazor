@@ -4,40 +4,30 @@
 @using Labb3FullstackBlazor.Services
 @inject SkillService SkillService
 
-<h3>Skills</h3>
+<div>
+    <h3>Skills</h3>
 
-@if (skills == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Skill Name</th>
-                <th>Skill YearsOfExperience</th>
-                <th>Skill SkillLevel</th>
-            </tr>
-        </thead>
-        <tbody>
+    @if (skills == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="d-flex flex-wrap">
             @foreach (var skill in skills)
             {
-                <tr>
-                    <td>@skill.Name</td>
-                    <td>@skill.YearsOfExperience</td>
-                    <td>@skill.SkillLevel</td>
-                </tr>
+                <Cards Skill="skill" />
             }
-        </tbody>
-    </table>
-}
+        </div>
+    }
+</div>
 
 @code {
-    
     List<Skill> skills;
+
     protected override async Task OnInitializedAsync()
     {
         skills = await SkillService.GetSkills();
     }
 }
+

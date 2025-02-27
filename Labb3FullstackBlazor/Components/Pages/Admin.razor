@@ -1,17 +1,181 @@
 ﻿@page "/admin"
 @rendermode InteractiveServer
+@using Labb3FullstackBlazor.Models
+@inject AdminService AdminService
 
+<div>
+    <h3 class="text-center">Admin</h3>
 
-<h3>Admin</h3>
+    @if (!isAuthenticated)
+    {
+        <EditForm Model="login" OnValidSubmit="ManageLogin" class="mb-3 shadow-sm container-fluid p-5 d-flex flex-column align-items-center" style="width: 16rem;">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-<EditForm Model="_skill">
-    <InputText id="username" placeholder="Username" />
-    <InputText id="password" placeholder="Password" />
-    <button type="submit">Login</button>
+            <div>
+                <label for="username">Username:</label>
+                <InputText id="username" @bind-Value="login.UserName" class="form-control" />
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <InputText id="password" @bind-Value="login.Password" type="password" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </EditForm>
+    }
+    else
+    {
+        <p class="text-center">Welcome to the admin panel.</p>
+        <br />
 
-</EditForm>
+        <h4>Skills</h4>
+        @if (skills != null)
+        {
+            <div class="d-flex flex-wrap">
+                @foreach (var skill in skills)
+                {
+                    <Cards Skill="skill" IsAdmin="true" />
+                }
+            </div>
+        }
+        else
+        {
+            <p>Loading skills...</p>
+        }
+
+        <button class="btn btn-secondary" @onclick="ToggleAddSkillForm">Add Skill</button>
+        @if (showAddSkillForm)
+        {
+            <EditForm Model="newSkill" OnValidSubmit="AddSkill" class="card skill-card mb-3 shadow-sm">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
+                    <label for="skillName">Skill Name:</label>
+                    <InputText id="skillName" @bind-Value="newSkill.Name" class="form-control" />
+                </div>
+                <div>
+                    <label for="yearsOfExperience">Years of Experience:</label>
+                    <InputText id="yearsOfExperience" @bind-Value="newSkill.YearsOfExperience" class="form-control" />
+                </div>
+                <div>
+                    <label for="skillLevel">Skill Level:</label>
+                    <InputText id="skillLevel" @bind-Value="newSkill.SkillLevel" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Add Skill</button>
+            </EditForm>
+        }
+        <br />
+        <br />
+
+        <h4>Projects</h4>
+        @if (projects != null)
+        {
+            <div class="d-flex flex-wrap">
+                @foreach (var project in projects)
+                {
+                    <Cards Project="project" IsAdmin="true" />
+                }
+            </div>
+        }
+        else
+        {
+            <p>Loading projects...</p>
+        }
+
+        <button class="btn btn-secondary" @onclick="ToggleAddProjectForm">Add Project</button>
+        @if (showAddProjectForm)
+        {
+            <EditForm Model="newProject" OnValidSubmit="AddProject" class="card skill-card mb-3 shadow-sm">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div>
+                    <label for="projectName">Project Name:</label>
+                    <InputText id="projectName" @bind-Value="newProject.Name" class="form-control" />
+                </div>
+                <div>
+                    <label for="projectDescription">Project Description:</label>
+                    <InputText id="projectDescription" @bind-Value="newProject.Description" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Add Project</button>
+            </EditForm>
+        }
+    }
+</div>
 
 @code {
-    private Skills _skill = new();
+    private AdminUser login = new AdminUser();
+    private bool isAuthenticated = false;
+    private List<Skill> skills;
+    private List<Project> projects;
+    private Skill newSkill = new Skill();
+    private Project newProject = new Project();
+    private bool showAddSkillForm = false;
+    private bool showAddProjectForm = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            skills = await AdminService.GetSkills();
+            projects = await AdminService.GetProjects();
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception (e.g., show an error message)
+            Console.WriteLine($"Error loading data: {ex.Message}");
+        }
+    }
+
+    private void ManageLogin()
+    {
+        isAuthenticated = AdminService.IsAuthenticated(login.UserName, login.Password);
+        if (!isAuthenticated)
+        {
+            // Handle login failure (e.g., show an error message)
+            Console.WriteLine("Invalid username or password.");
+        }
+        StateHasChanged(); // Force a UI update after login
+    }
+
+    private void ToggleAddSkillForm()
+    {
+        showAddSkillForm = !showAddSkillForm;
+    }
+
+    private void ToggleAddProjectForm()
+    {
+        showAddProjectForm = !showAddProjectForm;
+    }
+
+    private async Task AddSkill()
+    {
+        try
+        {
+            await AdminService.AddSkill(newSkill);
+            skills = await AdminService.GetSkills(); // Refresh the skills list
+            newSkill = new Skill(); // Reset the form
+            showAddSkillForm = false; // Hide the form after submission
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception (e.g., show an error message)
+            Console.WriteLine($"Error adding skill: {ex.Message}");
+        }
+    }
+
+    private async Task AddProject()
+    {
+        try
+        {
+            await AdminService.AddProject(newProject);
+            projects = await AdminService.GetProjects(); // Refresh the projects list
+            newProject = new Project(); // Reset the form
+            showAddProjectForm = false; // Hide the form after submission
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception (e.g., show an error message)
+            Console.WriteLine($"Error adding project: {ex.Message}");
+        }
+    }
 }

@@ -1,52 +1,45 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@inject NavigationManager Navigation
 
-
-<div class="container-fluid p-5" style="">
-    <main class="align-items-center;" style="flex-direction:column;">
-        <div class="profile">
-            <img src="/Alex-Pic.png" alt="Profile Picture" class="rounded" style="max-width:150px; z-index:0">
+<div class="container-fluid p-5 text-center" style="padding-top: 100px;">
+    <main class="d-flex flex-column align-items-center">
+        <div class="profile mb-4">
+            <img src="images/Alex-profile.png" alt="Profile Picture" class="rounded-circle img-thumbnail backlight">
         </div>
-        <div class="Profile-Name">
+        <div class="text-center mb-4">
             <h1>Alexander Eklöf</h1>
             <h3>Junior DevOps</h3>
+            <section class="container text-center d-flex justify-content-center">
+                <Social_Links></Social_Links>
+            </section>
         </div>
-        <br />
-        <div class="about">
-            <h5>Wallabilla I'm a Killa'</h5>
-            <p>Don't be trippin' over mah skillin'</p>
+        <div class="about align-content-around mb-4">
+            <h5>About me</h5>
+            <p>
+                Versatile software developer with experience in WPF and Blazor Server, specializing in building intuitive and efficient applications.
+                Strong background in C# and .NET, with a keen eye for UI/UX design and structured, maintainable code.
+                Currently expanding knowledge in DevOps practices, focusing on automation, CI/CD, and infrastructure as code to bridge development and operations effectively.
+                Passionate about optimizing workflows and enhancing software delivery processes.
+            </p>
         </div>
-
 
         <!-- Buttons -->
-        <button class="btn" @onclick="ToggleSkills">Show Skills</button>
-        @if (showSkills)
-        {
-            <Skills />
-        }
-        <button class="btn" @onclick="ToggleProjects">Show Projects</button>
-        @if (showprojects)
-        {
-            <Projects />
-        }
+        <div class="d-flex justify-content-center">
+            <button class="btn" @onclick="NavigateToSkills">Show Skills</button>
+            <button class="btn" @onclick="NavigateToProjects">Show Projects</button>
+        </div>
     </main>
-
 </div>
-    <Social_Links></Social_Links>
-    
-
 
 @code {
-    private bool showSkills = false;
-    private bool showprojects = false;
-
-    private void ToggleSkills()
+    private void NavigateToSkills()
     {
-        showSkills = !showSkills;
+        Navigation.NavigateTo("/skills");
     }
 
-    private void ToggleProjects()
+    private void NavigateToProjects()
     {
-        showprojects = !showprojects;    
+        Navigation.NavigateTo("/projects");
     }
 }

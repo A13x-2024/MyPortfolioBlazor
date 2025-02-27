@@ -1,81 +1,135 @@
 /* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #282828;
+    font-family: 'Lato', sans-serif;
+    background-color: #1a1a1a; /* Dark background */
     color: #eaeaea;
-    line-height: 1.6;
-    font-size: 16px;
-    overflow-x: hidden;
-    background-image: url(''); /* Add this line */
-    background-size: contain; /* Cover the entire viewport */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+    padding: 50px; /* Reduced padding for a more balanced look */
+    margin: 0; /* Ensure no default margin */
+    overflow: hidden; /* Prevent scrollbars */
+}
 
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Ensure particles are behind content */
+}
+
+/* Profile Picture Styles */
+.profile img {
+    width: 200px; /* Set width to 200px */
+    padding: 0px;
+    border: 0px;
 }
 
 /* Links */
 a {
-    color: #f4a300; /* Orange accent */
+    color: #ff6f61; /* Accent color */
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
     a:hover {
-        color: #ffb84d;
+        color: #ff8a75;
     }
 
-/* Main Section */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+h1 {
+    font-size: 3rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
-h2 {
-    font-size: 2.5rem;
-    color: #ffffff;
+h3 {
+    font-size: 1.5rem;
+    color: #cccccc;
     margin-bottom: 20px;
+    font-weight: 400;
+}
+
+h5 {
+    font-size: 1.25rem;
+    color: #ff6f61; /* Accent color */
+    margin-bottom: 10px;
     font-weight: 600;
+    text-align: center; /* Center the "About me" heading */
 }
 
 p {
     font-size: 1.1rem;
     color: #dddddd;
     line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: center; /* Center the "About me" text */
 }
 
 ul {
     list-style-type: none;
+    padding: 0; /* Remove default padding */
 }
 
 /* Button Styles */
-button {
-    background-color: #f4a300;
-    color: #111111;
-    font-size: 1.1rem;
+.btn {
+    background-color: #ff6f61; /* Accent color */
+    color: #ffffff;
+    font-size: 1rem; /* Slightly increased font size */
     border: none;
-    padding: 10px 20px;
+    padding: 10px 20px; /* Slightly increased padding */
     margin-top: 20px;
+    margin-right: 10px; /* Add margin-right for spacing between buttons */
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add color transition */
 }
 
-.btn {
-    color: white
-}
-
-    button:hover {
-        background-color: #ffb84d;
+    .btn:hover {
+        background-color: #ff8a75;
+        /* Ensure text color remains consistent on hover */
     }
 
 .table {
-    color: darkorange;
+    color: #ff6f61; /* Accent color */
 }
+
+/* Skill Card Styles */
+.skill-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    text-align: left;
+    color: #eaeaea;
+}
+
+    .skill-card h4 {
+        margin-bottom: 10px;
+        color: #ff6f61; /* Accent color */
+    }
+
+    .skill-card p {
+        margin: 5px 0;
+    }
+
+/* Project Card Styles */
+.project-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    text-align: left;
+    color: #eaeaea;
+}
+
+    .project-card h4 {
+        margin-bottom: 10px;
+        color: #ff6f61; /* Accent color */
+    }
+
+    .project-card p {
+        margin: 5px 0;
+    }

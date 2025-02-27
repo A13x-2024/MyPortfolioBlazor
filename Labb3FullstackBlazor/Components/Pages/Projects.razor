@@ -4,38 +4,30 @@
 @using Labb3FullstackBlazor.Services
 @inject ProjectService ProjectService
 
-<h3>Projects</h3>
+<div>
+    <h3>Projects</h3>
 
-@if (projects == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Project Name</th>
-                <th>Project Description</th>
-            </tr>
-        </thead>
-        <tbody>
+    @if (projects == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="d-flex flex-wrap">
             @foreach (var project in projects)
             {
-                <tr>
-                    <td>@project.Name</td>
-                    <td>@project.Description</td>
-                </tr>
+                <Cards Project="project" />
             }
-        </tbody>
-    </table>
-}
+        </div>
+    }
+</div>
 
 @code {
-
     List<Project> projects;
+
     protected override async Task OnInitializedAsync()
     {
         projects = await ProjectService.GetProjects();
     }
 }
+
