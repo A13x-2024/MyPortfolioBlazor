@@ -130,4 +130,3 @@ public class AdminService
         return _adminUser != null && _adminUser.UserName == userName && _adminUser.Password == password;
     }
 }
-

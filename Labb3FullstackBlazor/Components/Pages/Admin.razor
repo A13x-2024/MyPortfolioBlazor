@@ -34,7 +34,7 @@
             <div class="d-flex flex-wrap">
                 @foreach (var skill in skills)
                 {
-                    <Cards Skill="skill" IsAdmin="true" />
+                    <Cards Skill="skill" IsAdmin="true" OnChange="RefreshData" />
                 }
             </div>
         }
@@ -73,7 +73,7 @@
             <div class="d-flex flex-wrap">
                 @foreach (var project in projects)
                 {
-                    <Cards Project="project" IsAdmin="true" />
+                    <Cards Project="project" IsAdmin="true" OnChange="RefreshData" />
                 }
             </div>
         }
@@ -100,6 +100,13 @@
             </EditForm>
         }
     }
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
 </div>
 
 @code {
@@ -111,8 +118,14 @@
     private Project newProject = new Project();
     private bool showAddSkillForm = false;
     private bool showAddProjectForm = false;
+    private string errorMessage;
 
     protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
     {
         try
         {
@@ -121,8 +134,7 @@
         }
         catch (Exception ex)
         {
-            // Handle the exception (e.g., show an error message)
-            Console.WriteLine($"Error loading data: {ex.Message}");
+            errorMessage = $"Error loading data: {ex.Message}";
         }
     }
 
@@ -131,8 +143,11 @@
         isAuthenticated = AdminService.IsAuthenticated(login.UserName, login.Password);
         if (!isAuthenticated)
         {
-            // Handle login failure (e.g., show an error message)
-            Console.WriteLine("Invalid username or password.");
+            errorMessage = "Invalid username or password.";
+        }
+        else
+        {
+            errorMessage = null; // Clear any previous error message
         }
         StateHasChanged(); // Force a UI update after login
     }
@@ -152,14 +167,14 @@
         try
         {
             await AdminService.AddSkill(newSkill);
-            skills = await AdminService.GetSkills(); // Refresh the skills list
+            await LoadData(); // Refresh the skills list
             newSkill = new Skill(); // Reset the form
             showAddSkillForm = false; // Hide the form after submission
+            errorMessage = null; // Clear any previous error message
         }
         catch (Exception ex)
         {
-            // Handle the exception (e.g., show an error message)
-            Console.WriteLine($"Error adding skill: {ex.Message}");
+            errorMessage = $"Error adding skill: {ex.Message}";
         }
     }
 
@@ -168,14 +183,20 @@
         try
         {
             await AdminService.AddProject(newProject);
-            projects = await AdminService.GetProjects(); // Refresh the projects list
+            await LoadData(); // Refresh the projects list
             newProject = new Project(); // Reset the form
             showAddProjectForm = false; // Hide the form after submission
+            errorMessage = null; // Clear any previous error message
         }
         catch (Exception ex)
         {
-            // Handle the exception (e.g., show an error message)
-            Console.WriteLine($"Error adding project: {ex.Message}");
+            errorMessage = $"Error adding project: {ex.Message}";
         }
+    }
+
+    private async Task RefreshData()
+    {
+        await LoadData();
+        StateHasChanged();
     }
 }

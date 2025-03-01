@@ -1,4 +1,5 @@
 ﻿@using Labb3FullstackBlazor.Models
+@inject AdminService AdminService
 
 <div class="d-flex flex-wrap">
     @if (Skill != null)
@@ -12,6 +13,7 @@
                     <input type="text" class="form-control mb-2" @bind="Skill.SkillLevel" />
                     <button class="btn btn-success" @onclick="SaveSkill">Save</button>
                     <button class="btn btn-secondary" @onclick="CancelEditSkill">Cancel</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteSkill(Skill)">Delete</button>
                 }
                 else
                 {
@@ -36,6 +38,7 @@
                     <textarea class="form-control mb-2" @bind="Project.Description"></textarea>
                     <button class="btn btn-success" @onclick="SaveProject">Save</button>
                     <button class="btn btn-secondary" @onclick="CancelEditProject">Cancel</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteProject(Project)">Delete</button>
                 }
                 else
                 {
@@ -61,6 +64,9 @@
     [Parameter]
     public bool IsAdmin { get; set; }
 
+    [Parameter]
+    public EventCallback OnChange { get; set; }
+
     private bool isEditingSkill = false;
     private bool isEditingProject = false;
 
@@ -69,11 +75,12 @@
         isEditingSkill = true;
     }
 
-    private void SaveSkill()
+    private async Task SaveSkill()
     {
         isEditingSkill = false;
-        // Implement the logic to save the skill
+        await AdminService.UpdateSkill(Skill);
         Console.WriteLine($"Saved skill: {Skill.Name}");
+        await OnChange.InvokeAsync();
     }
 
     private void CancelEditSkill()
@@ -81,20 +88,37 @@
         isEditingSkill = false;
     }
 
+    private async Task DeleteSkill(Skill skill)
+    {
+        await AdminService.DeleteSkill(skill.Id);
+        Console.WriteLine($"Deleted skill: {skill.Name}");
+        isEditingSkill = false;
+        await OnChange.InvokeAsync();
+    }
+
     private void EditProject(Project project)
     {
         isEditingProject = true;
     }
 
-    private void SaveProject()
+    private async Task SaveProject()
     {
         isEditingProject = false;
-        // Implement the logic to save the project
+        await AdminService.UpdateProject(Project);
         Console.WriteLine($"Saved project: {Project.Name}");
+        await OnChange.InvokeAsync();
     }
 
     private void CancelEditProject()
     {
         isEditingProject = false;
+    }
+
+    private async Task DeleteProject(Project project)
+    {
+        await AdminService.DeleteProject(project.Id);
+        Console.WriteLine($"Deleted project: {project.Name}");
+        isEditingProject = false;
+        await OnChange.InvokeAsync();
     }
 }

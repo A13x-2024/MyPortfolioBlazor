@@ -11,13 +11,13 @@
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="backlight.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <HeadOutlet />
+    <HeadOutlet @rendermode="InteractiveServer" />
 
 
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="InteractiveServer" />
     <div id="particles-js"></div>
     <script src="_framework/blazor.server.js"></script>
     <script>

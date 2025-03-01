@@ -6,7 +6,6 @@ body {
     color: #eaeaea;
     padding: 50px; /* Reduced padding for a more balanced look */
     margin: 0; /* Ensure no default margin */
-    overflow: hidden; /* Prevent scrollbars */
 }
 
 #particles-js {
