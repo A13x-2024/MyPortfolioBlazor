@@ -12,7 +12,7 @@ public class AdminService
         _adminUser = new AdminUser
         {
             UserName = "admin",
-            Password = "admin"
+            Password = "admin123"
         };
     }
 
