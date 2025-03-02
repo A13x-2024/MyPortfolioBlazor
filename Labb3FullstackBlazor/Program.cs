@@ -1,5 +1,6 @@
 using Labb3FullstackBlazor.Components;
 using Labb3FullstackBlazor.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Labb3FullstackBlazor;
 
@@ -21,6 +22,8 @@ public class Program
         builder.Services.AddScoped<SkillService>();
         builder.Services.AddScoped<ProjectService>();
         builder.Services.AddScoped<AdminService>();
+        builder.Services.AddScoped<UserService>();
+
 
 
         builder.Services.AddAuthorization(options =>
@@ -28,7 +31,8 @@ public class Program
             options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
         });
 
-
+        var connectionString = builder.Configuration.GetConnectionString("AzureDb");
+        builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
         var app = builder.Build();
 

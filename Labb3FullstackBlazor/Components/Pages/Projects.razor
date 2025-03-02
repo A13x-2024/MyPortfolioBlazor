@@ -3,7 +3,7 @@
 @using Labb3FullstackBlazor.Models
 @using Labb3FullstackBlazor.Services
 @inject ProjectService ProjectService
-@inject NavigationManager Navigation
+@inject NavigationManager Nav
 
 <div>
     <h3>Projects</h3>
@@ -38,12 +38,12 @@
 
     private void NavigateToHome()
     {
-        Navigation.NavigateTo("/");
+        Nav.NavigateTo("/");
     }
 
     private void NavigateToSkills()
     {
-        Navigation.NavigateTo("/Skills");
+        Nav.NavigateTo("/Skills");
     }
 }
 

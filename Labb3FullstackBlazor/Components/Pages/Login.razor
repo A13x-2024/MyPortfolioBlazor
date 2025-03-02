@@ -1,0 +1,39 @@
+﻿@using Labb3FullstackBlazor.Services
+@rendermode InteractiveServer
+@inject UserService UserService
+@inject NavigationManager Nav
+@code {
+    [Parameter]
+    public EventCallback OnLoginSuccess { get; set; }
+
+    private string UserName = "";
+    private string Password = "";
+    private string? errorMessage;
+
+    private async Task LoginUser()
+    {
+        var isValid = await UserService.ValidateUserAsync(UserName, Password);
+        var isAdmin = await UserService.IsAdminAsync(UserName);
+
+        if (isValid && isAdmin)
+        {
+            await OnLoginSuccess.InvokeAsync();
+            Nav.NavigateTo("/admin");
+        }
+        else
+        {
+            errorMessage = "Invalid login credentials!";
+        }
+    }
+}
+
+<h3>Admin Login</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p style="color: red">@errorMessage</p>
+}
+
+<input @bind="UserName" placeholder="Username" />
+<input @bind="Password" type="password" placeholder="Password" />
+<button @onclick="LoginUser">Login</button>

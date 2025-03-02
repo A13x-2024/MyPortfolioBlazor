@@ -1,6 +1,6 @@
 ﻿@page "/"
 @rendermode InteractiveServer
-@inject NavigationManager Navigation
+@inject NavigationManager Nav
 
 <div class="container-fluid p-5 text-center" style="padding-top: 100px;">
     <main class="d-flex flex-column align-items-center">
@@ -36,11 +36,11 @@
 @code {
     private void NavigateToSkills()
     {
-        Navigation.NavigateTo("/skills");
+        Nav.NavigateTo("/skills");
     }
 
     private void NavigateToProjects()
     {
-        Navigation.NavigateTo("/projects");
+        Nav.NavigateTo("/projects");
     }
 }
